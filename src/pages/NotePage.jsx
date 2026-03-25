@@ -1,27 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NoteForm from "../components/NoteForm";
 import NoteList from "../components/NoteList";
 import SearchBar from "../components/SearchBar";
 
 function NotePage() {
-  const [notes, setNotes] = useState([]);
+  const [notes, setNotes] = useState(() => {
+    const saved = localStorage.getItem("notes");
+    return saved ? JSON.parse(saved) : [];
+  });
   const [searchQuery, setSearchQuery] = useState("");
   const [editId, setEditId] = useState(null);
   const [editTitle, setEditTitle] = useState("");
-  const [editDetail, setEditDetail] = useState(""); // ✅ fixed name
+  const [editDetail, setEditDetail] = useState("");
+
+  useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }, [notes]);
 
   function addNotes(title, detail) {
     const newNote = {
       id: Date.now(),
       title,
       detail,
+      date: new Date().toLocaleDateString(),
+      time: new Date().toLocaleTimeString(),
     };
     setNotes((prev) => [...prev, newNote]);
   }
 
   const searchNote = notes.filter(
     (note) =>
-      note.title.toLowerCase().includes(searchQuery.toLowerCase()) || // ✅ fixed typo
+      note.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       note.detail.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
@@ -29,7 +38,7 @@ function NotePage() {
     const noteToEdit = notes.find((note) => note.id === id);
     setEditId(id);
     setEditTitle(noteToEdit.title);
-    setEditDetail(noteToEdit.detail); // ✅ fixed name
+    setEditDetail(noteToEdit.detail);
   }
 
   function updateNote(title, detail) {
@@ -40,7 +49,7 @@ function NotePage() {
     );
     setEditId(null);
     setEditTitle("");
-    setEditDetail(""); // ✅ fixed name
+    setEditDetail("");
   }
 
   function deleteNote(id) {
@@ -53,7 +62,7 @@ function NotePage() {
         addNotes={addNotes}
         editId={editId}
         editTitle={editTitle}
-        editDetail={editDetail} // ✅ fixed name
+        editDetail={editDetail}
         updateNote={updateNote}
       />
       <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />

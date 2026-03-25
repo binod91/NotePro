@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import styles from "./NoteForm.module.css";
 
 function NoteForm({ addNotes, editId, editTitle, editDetail, updateNote }) {
   const [title, setTitle] = useState("");
@@ -34,11 +35,12 @@ function NoteForm({ addNotes, editId, editTitle, editDetail, updateNote }) {
   };
 
   return (
-    <form className="note-form" onSubmit={submitHandler}>
-      <h1>Note Form</h1>
+    <form className={styles.form} onSubmit={submitHandler}>
+      <h1 className={styles.title}>Note Form</h1>
       <div className="title">
         <label htmlFor="title">Title</label>
         <input
+          className={styles.input}
           type="text"
           id="title"
           value={title}
@@ -46,21 +48,31 @@ function NoteForm({ addNotes, editId, editTitle, editDetail, updateNote }) {
           required
         />
       </div>
-      <div className="details">
+      <div className={styles.formGroup}>
         <label htmlFor="detail">Description</label>
         <textarea
+          className={styles.textarea}
           id="detail"
           maxLength="500"
           value={detail}
           onChange={(e) => setDetail(e.target.value)}
           required
         />
+        <p className={styles.charCount}>
+          {500 - detail.length} characters remaining
+        </p>
       </div>
 
       {/* ✅ Step 4 - button text changes */}
-      <button type="submit">{editId ? "Update Note" : "Add Note"}</button>
+      <button className={styles.button} type="submit">
+        {editId ? "Update Note" : "Add Note"}
+      </button>
 
-      {success && <p style={{ color: "green" }}>Note Saved</p>}
+      {success && (
+        <p className={styles.success} style={{ color: "green" }}>
+          Note Saved
+        </p>
+      )}
     </form>
   );
 }
