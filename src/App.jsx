@@ -11,6 +11,13 @@ function App() {
       <main className={styles.main}>
         <NotePage />
       </main>
+
+      {/* ✅ footer */}
+      <footer className={styles.footer}>
+        <p>
+          Made by <strong>Your Name</strong> © 2026
+        </p>
+      </footer>
     </div>
   );
 }

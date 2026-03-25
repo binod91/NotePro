@@ -28,3 +28,15 @@
   margin: 0 auto;
   padding: 2rem 1rem;
 }
+.footer {
+  text-align: center;
+  padding: 1.5rem;
+  background-color: #3498db;
+  color: white;
+  font-size: 0.9rem;
+  margin-top: 2rem;
+}
+
+.footer strong {
+  font-weight: 700;
+}
