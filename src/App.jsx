@@ -15,7 +15,7 @@ function App() {
       {/* ✅ footer */}
       <footer className={styles.footer}>
         <p>
-          Made by <strong>Your Name</strong> © 2026
+          Made by <strong>Binod</strong> © 2026
         </p>
       </footer>
     </div>
